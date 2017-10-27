@@ -6,7 +6,14 @@ public class Reader {
 	ArrayList <Frame> frames;
 	ArrayList<Tag> identifiedTags;
 	
-	public Reader () {
-		this.frames = new ArrayList();
+	public Reader (int initialFrameSize) {
+		this.frames = new ArrayList(initialFrameSize);
+		this.identifiedTags = new ArrayList();
+	}
+	
+	void interrogate () {
+		
+		// implement
+		
 	}
 }
