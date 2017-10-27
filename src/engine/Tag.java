@@ -3,11 +3,12 @@ package engine;
 import java.util.Random;
 
 public class Tag {
+	static int tagIdCounter = 0;
 	int id;
 	boolean identified;
 	
-	public Tag (int id) {
-		this.id = id;
+	public Tag () {
+		this.id = tagIdCounter;
 		this.identified = false;
 	}
 	
