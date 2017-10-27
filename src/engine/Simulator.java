@@ -27,13 +27,22 @@ public class Simulator {
 	}
 	
 	void execute () {
+		setEstimator(this.estimationAlgorithm);
+		while (identifiedTags.size() < initialTagsNumber) {
+			
+			Frame currentFrame = new Frame(this.initialFrameSize);
+			frames.add(currentFrame);
+			estimator.calculateNextFrame(currentFrame);
+		}
+		
+		
+	}
+	
+	void setEstimator (String estimationAlgorithm) {
 		if (estimationAlgorithm.equals("lower"))
 			this.estimator = new LowBoundEstimator();
 		else
 			this.estimator = new EomLeeEstimator();
-		
-		
-		
 	}
 	
 	
