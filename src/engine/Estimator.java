@@ -2,5 +2,5 @@ package engine;
 
 public abstract class Estimator {
 	
-	abstract double calculateNextFrameSize (Frame frame);
+	abstract Frame calculateNextFrameSize (Frame frame);
 }

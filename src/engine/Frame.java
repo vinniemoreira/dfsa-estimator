@@ -14,7 +14,7 @@ public class Frame {
 	
 	
 	
-	public Frame(int initialFrameSize, Tag[] identifiedTags) {
+	public Frame(int initialFrameSize) {
 		super();
 		this.initialFrameSize = initialFrameSize;
 		this.slots = new int [initialFrameSize];
@@ -26,13 +26,21 @@ public class Frame {
 		this.backlog = 0;
 	}
 
-	double nextFrameSize (Estimator estimator) {
-		double res = estimator.calculateNextFrameSize(this);
-		return res;
+	Frame nextFrameSize (Estimator estimator) {
+		Frame frame = estimator.calculateNextFrameSize(this);
+		return frame;
 		
 	}
 	
 	void identifyTag () {
-		// implement
+		for (int x : slots) {
+			if (x == 1) {
+				successfullSlots++;
+			} else if (x == 0) {
+				emptySlots++;
+			} else {
+				collisionSlots++;
+			}
+		}
 	}
 }

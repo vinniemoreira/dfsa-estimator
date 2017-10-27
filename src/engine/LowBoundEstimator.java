@@ -1,9 +1,14 @@
 package engine;
 
 public class LowBoundEstimator extends Estimator {
-	double calculateNextFrameSize (Frame frame) {
-		double frameSize = 0;
+	Frame calculateNextFrameSize (Frame frame) {
+		Frame nextFrame;
 		// implement
-		return frameSize;
+		
+		int nextFrameSize = frame.collisionSlots * 2;
+		nextFrame = new Frame(nextFrameSize);
+		
+		
+		return nextFrame;
 	}
 }
