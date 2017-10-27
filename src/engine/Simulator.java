@@ -1,7 +1,14 @@
 package engine;
 
+import java.util.LinkedList;
+
 public class Simulator {
 	String estimationAlgorithm;
+	// Reader reader;
+	Estimator estimator;
+	LinkedList<Frame> frames = new LinkedList();
+	LinkedList<Tag> identifiedTags = new LinkedList();
+	
 	int initialTagsNumber;
 	int incrementTagRate;
 	int maxTagsNumber;
@@ -20,8 +27,13 @@ public class Simulator {
 	}
 	
 	void execute () {
+		if (estimationAlgorithm.equals("lower"))
+			this.estimator = new LowBoundEstimator();
+		else
+			this.estimator = new EomLeeEstimator();
 		
-		// implement
+		
+		
 	}
 	
 	

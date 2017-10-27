@@ -3,13 +3,15 @@ package engine;
 import java.util.Random;
 
 public class Tag {
-	static int tagIdCounter = 0;
+	public static int tagIdCounter = 0;
 	int id;
 	boolean identified;
 	
 	public Tag () {
 		this.id = tagIdCounter;
 		this.identified = false;
+		
+		tagIdCounter++;
 	}
 	
 	private int transmitToSlot (int frameSize) {
