@@ -13,4 +13,9 @@ public class LowBoundEstimator extends Estimator {
 		
 		return nextFrame;
 	}
+	
+	int calculateCompetingTags (Frame frame) {
+		int computingTags = frame.successfullSlots + (2 * frame.collisionSlots);
+		return computingTags;
+	}
 }

@@ -15,10 +15,11 @@ public class Main {
 		int initialFrameSize = Integer.parseInt(args[5]);
 		
 		
-		Simulator simulator = new Simulator (estimationAlgorithm, initialTagsNumber, incrementTagRate,
+		Simulator simulator = new Simulator (initialTagsNumber, incrementTagRate,
 				maxTagsNumber, iterationsNumber, initialFrameSize);
 		
-		simulator.execute();
+		simulator.execute(estimationAlgorithm);
+		simulator.show();
 		
 
 	}
