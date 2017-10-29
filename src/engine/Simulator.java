@@ -40,9 +40,9 @@ public class Simulator {
 		//	for (int i = 0; i < 10; i++) {
 			currentFrame.execute(backlog);
 			identifiedTagsNum += currentFrame.successfullSlots;
-			System.out.println("Total identified tags " + identifiedTagsNum);
+			// System.out.println("Total identified tags " + identifiedTagsNum);
 			currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
-			System.out.println("Success slots in current frame " + currentFrame.successfullSlots);
+			// System.out.println("Success slots in current frame " + currentFrame.successfullSlots);
 			frames.add(currentFrame);
 			backlog = initialTagsNumber - identifiedTagsNum;
 			currentFrame = estimator.calculateNextFrame(currentFrame);
@@ -59,14 +59,16 @@ public class Simulator {
 	}
 	
 	public void show () {
+		int totalSlots, totalEmptySlots, totalSuccessSlots, totalCollisionSlots;
+		totalSlots = totalEmptySlots = totalSuccessSlots = totalCollisionSlots = 0;
 		for (Frame x : frames) {
-			System.out.println("Success Slots " + x.successfullSlots);
-			System.out.println("Collision Slots " + x.collisionSlots);
-			System.out.println("SuccessSlots " + x.emptySlots);
-			System.out.println("Total competing Tags " + x.competingTags);
-			System.out.println("Total used slots " + x.successfullSlots + collisionSlots + emptySlots);
-			System.out.println("Frame size " + x.frameSize + "\n");
+			totalSlots += x.slots.length;
+			totalEmptySlots += x.emptySlots;
+			totalSuccessSlots += x.successfullSlots;
+			totalCollisionSlots += x.collisionSlots;
 		}
+		System.out.println("Total slots " + totalSlots + "\nTotal successful slots " + totalSuccessSlots + "\nTotal collision slots " + totalCollisionSlots + 
+				"\nTotal empty slots " + totalEmptySlots);
 	}
 	
 	

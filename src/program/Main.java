@@ -19,7 +19,7 @@ public class Main {
 				maxTagsNumber, iterationsNumber, initialFrameSize);
 		
 		simulator.execute(estimationAlgorithm);
-		// simulator.show();
+		simulator.show();
 		
 		
 
