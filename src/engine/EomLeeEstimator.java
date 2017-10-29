@@ -3,9 +3,16 @@ package engine;
 public class EomLeeEstimator extends Estimator {
 
 	@Override
-	Frame calculateNextFrameSize(Frame frame) {
+	Frame calculateNextFrame(Frame frame) {
 		// TODO Auto-generated method stub
-		return null;
+		int n = 1000;
+		Frame answer = new Frame(n); 
+		return answer;
+	}
+	
+	int calculateCompetingTags (Frame frame) {
+		int answer = 0;
+		return answer;
 	}
 
 }

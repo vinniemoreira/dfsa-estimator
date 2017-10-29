@@ -10,7 +10,7 @@ public class Tag {
 	
 	public Tag () {
 		this.id = tagIdCounter;
-		transmitLog = new LinkedList<Integer>();
+		transmitLog = new LinkedList<Integer>(); 
 		this.identified = false;
 		
 		tagIdCounter++;

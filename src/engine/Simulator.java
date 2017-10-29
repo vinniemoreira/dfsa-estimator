@@ -1,6 +1,6 @@
 package engine;
 
-import java.util.LinkedList;
+import java.util.*;
 
 public class Simulator {
 	
@@ -29,24 +29,23 @@ public class Simulator {
 		this.iterationsNumber = iterationsNumber;
 		this.initialFrameSize = initialFrameSize;
 		this.identifiedTagsNum = 0;
-		this.backlog = initialTagsNumber;
+		this.backlog = initialTagsNumber; 
 	}
 	
 	public void execute (String algorithmName) {
 		setEstimator (algorithmName);
 		Frame currentFrame = new Frame(initialFrameSize);
-		Tag tag = new Tag ();
+		// Tag tag = new Tag ();
 		 while (identifiedTagsNum < initialTagsNumber) {
 		//	for (int i = 0; i < 10; i++) {
-			currentFrame.execute(backlog, tag);
+			currentFrame.execute(backlog);
 			identifiedTagsNum += currentFrame.successfullSlots;
-			backlog = currentFrame.collisionSlots;
-			System.out.println(identifiedTagsNum);
+			System.out.println("Total identified tags " + identifiedTagsNum);
 			currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
-			System.out.println(currentFrame.successfullSlots);
+			System.out.println("Success slots in current frame " + currentFrame.successfullSlots);
 			frames.add(currentFrame);
-			Frame temp = currentFrame;
-			currentFrame = estimator.calculateNextFrame(temp);
+			backlog = initialTagsNumber - identifiedTagsNum;
+			currentFrame = estimator.calculateNextFrame(currentFrame);
 		}
 		
 		
