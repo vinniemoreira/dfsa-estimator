@@ -23,8 +23,8 @@ public class Frame {
 		this.competingTags = 0;
 	}
 	
-	void execute (Tag tag) {
-		buildSlots(tag);
+	void execute (int remainsTags, Tag tag) {
+		buildSlots(remainsTags, tag);
 		
 		for (int x : slots) {
 			if (x==0)
@@ -35,12 +35,12 @@ public class Frame {
 				collisionSlots++;
 		}
 		
-		competingTags = successfullSlots + 2 * collisionSlots;
+		// competingTags = successfullSlots + 2 * collisionSlots;
 	}
 	
-	void buildSlots (Tag tag) {
-		
-		for (int i = 0; i < frameSize; i++) {
+	void buildSlots (int remainTags, Tag tag) {
+		slots = new int [frameSize];
+		for (int i = 0; i < remainTags; i++) {
 			int slotToTransmit = tag.transmitToSlot(frameSize);
 			slots[slotToTransmit]++;
 		}

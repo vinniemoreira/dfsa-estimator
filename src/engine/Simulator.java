@@ -13,6 +13,7 @@ public class Simulator {
 	int maxTagsNumber;
 	int iterationsNumber;
 	int initialFrameSize, identifiedTagsNum;
+	int backlog;
 	
 	int successSlots, collisionSlots, emptySlots;
 	
@@ -28,19 +29,24 @@ public class Simulator {
 		this.iterationsNumber = iterationsNumber;
 		this.initialFrameSize = initialFrameSize;
 		this.identifiedTagsNum = 0;
+		this.backlog = initialTagsNumber;
 	}
 	
 	public void execute (String algorithmName) {
 		setEstimator (algorithmName);
 		Frame currentFrame = new Frame(initialFrameSize);
 		Tag tag = new Tag ();
-		while (identifiedTagsNum < initialTagsNumber) {
-			
-			currentFrame.execute(tag);
-			identifiedTagsNum =+ currentFrame.successfullSlots;
+		 while (identifiedTagsNum < initialTagsNumber) {
+		//	for (int i = 0; i < 10; i++) {
+			currentFrame.execute(backlog, tag);
+			identifiedTagsNum += currentFrame.successfullSlots;
+			backlog = currentFrame.collisionSlots;
+			System.out.println(identifiedTagsNum);
 			currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
+			System.out.println(currentFrame.successfullSlots);
 			frames.add(currentFrame);
-			currentFrame = estimator.calculateNextFrame(currentFrame);
+			Frame temp = currentFrame;
+			currentFrame = estimator.calculateNextFrame(temp);
 		}
 		
 		
@@ -49,7 +55,7 @@ public class Simulator {
 	void setEstimator (String estimationAlgorithm) {
 		if (estimationAlgorithm.equals("lower"))
 			this.estimator = new LowBoundEstimator();
-		else
+		else if (estimationAlgorithm.equals("eom"))
 			this.estimator = new EomLeeEstimator();
 	}
 	
@@ -58,7 +64,9 @@ public class Simulator {
 			System.out.println("Success Slots " + x.successfullSlots);
 			System.out.println("Collision Slots " + x.collisionSlots);
 			System.out.println("SuccessSlots " + x.emptySlots);
-			System.out.println("SuccessSlots " + x.competingTags);
+			System.out.println("Total competing Tags " + x.competingTags);
+			System.out.println("Total used slots " + x.successfullSlots + collisionSlots + emptySlots);
+			System.out.println("Frame size " + x.frameSize + "\n");
 		}
 	}
 	
