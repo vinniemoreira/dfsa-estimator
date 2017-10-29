@@ -6,22 +6,36 @@ public class Simulator {
 	
 	Estimator estimator;
 	LinkedList<Frame> frames;
-	LinkedList<Tag> identifiedTags;
+	// LinkedList<Tag> identifiedTags;
 	
 	int initialTagsNumber;
 	int incrementTagRate;
 	int maxTagsNumber;
 	int iterationsNumber;
-	int initialFrameSize, identifiedTagsNum;
+	int initialFrameSize;
+	int identifiedTagsNum;
 	int backlog;
 	
-	int successSlots, collisionSlots, emptySlots;
+	public int successSlots, collisionSlots, emptySlots;
+	public double totalSlots;
+	
+	public Simulator () {
+		this.estimator = new LowBoundEstimator();
+		this.frames = new LinkedList();
+		this.initialTagsNumber = 100;
+		this.incrementTagRate = 100;
+		this.maxTagsNumber = 1000;
+		this.iterationsNumber = 1000;
+		this.initialFrameSize = 64;
+		this.identifiedTagsNum = 0;
+		this.backlog = initialTagsNumber;
+	}
 	
 	public Simulator(int initialTagsNumber, int incrementTagRate, int maxTagsNumber,
 			int iterationsNumber, int initialFrameSize) {
-		
+		this.estimator = new LowBoundEstimator();
 		frames = new LinkedList();
-		identifiedTags = new LinkedList();
+		// identifiedTags = new LinkedList();
 		
 		this.initialTagsNumber = initialTagsNumber;
 		this.incrementTagRate = incrementTagRate;
@@ -29,46 +43,91 @@ public class Simulator {
 		this.iterationsNumber = iterationsNumber;
 		this.initialFrameSize = initialFrameSize;
 		this.identifiedTagsNum = 0;
-		this.backlog = initialTagsNumber; 
+		this.backlog = initialTagsNumber;
+		
+		successSlots = collisionSlots = emptySlots = 0;
+		totalSlots = 0;
 	}
 	
-	public void execute (String algorithmName) {
-		setEstimator (algorithmName);
+	public void execute () {
 		Frame currentFrame = new Frame(initialFrameSize);
 		// Tag tag = new Tag ();
 		 while (identifiedTagsNum < initialTagsNumber) {
-		//	for (int i = 0; i < 10; i++) {
 			currentFrame.execute(backlog);
-			identifiedTagsNum += currentFrame.successfullSlots;
-			// System.out.println("Total identified tags " + identifiedTagsNum);
+			identifiedTagsNum += currentFrame.successfullSlots;	
 			currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
-			// System.out.println("Success slots in current frame " + currentFrame.successfullSlots);
 			frames.add(currentFrame);
 			backlog = initialTagsNumber - identifiedTagsNum;
 			currentFrame = estimator.calculateNextFrame(currentFrame);
 		}
+		calculateUsedSlots();
 		
 		
 	}
 	
-	void setEstimator (String estimationAlgorithm) {
-		if (estimationAlgorithm.equals("lower"))
-			this.estimator = new LowBoundEstimator();
-		else if (estimationAlgorithm.equals("eom"))
-			this.estimator = new EomLeeEstimator();
-	}
-	
-	public void show () {
-		int totalSlots, totalEmptySlots, totalSuccessSlots, totalCollisionSlots;
-		totalSlots = totalEmptySlots = totalSuccessSlots = totalCollisionSlots = 0;
+	void calculateUsedSlots () {
 		for (Frame x : frames) {
 			totalSlots += x.slots.length;
-			totalEmptySlots += x.emptySlots;
-			totalSuccessSlots += x.successfullSlots;
-			totalCollisionSlots += x.collisionSlots;
+			emptySlots += x.emptySlots;
+			successSlots += x.successfullSlots;
+			collisionSlots += x.collisionSlots;
 		}
-		System.out.println("Total slots " + totalSlots + "\nTotal successful slots " + totalSuccessSlots + "\nTotal collision slots " + totalCollisionSlots + 
-				"\nTotal empty slots " + totalEmptySlots);
+	}
+	
+	public Estimator getEstimator() {
+		return estimator;
+	}
+
+	public LinkedList<Frame> getFrames() {
+		return frames;
+	}
+
+	public int getInitialTagsNumber() {
+		return initialTagsNumber;
+	}
+
+	public int getIncrementTagRate() {
+		return incrementTagRate;
+	}
+
+	public int getMaxTagsNumber() {
+		return maxTagsNumber;
+	}
+
+	public int getIterationsNumber() {
+		return iterationsNumber;
+	}
+
+	public int getInitialFrameSize() {
+		return initialFrameSize;
+	}
+
+	public int getIdentifiedTagsNum() {
+		return identifiedTagsNum;
+	}
+
+	public int getBacklog() {
+		return backlog;
+	}
+
+	public int getSuccessSlots() {
+		return successSlots;
+	}
+
+	public int getCollisionSlots() {
+		return collisionSlots;
+	}
+
+	public int getEmptySlots() {
+		return emptySlots;
+	}
+
+	public String toString () {
+		
+		String simulator = "Total slots " + totalSlots + "\nTotal successful slots " + successSlots +
+				"\nTotal collision slots " + collisionSlots + 
+				"\nTotal empty slots " + emptySlots;
+		return simulator;
 	}
 	
 	

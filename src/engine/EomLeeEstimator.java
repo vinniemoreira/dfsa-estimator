@@ -10,7 +10,7 @@ public class EomLeeEstimator extends Estimator {
 		return answer;
 	}
 	
-	int calculateCompetingTags (Frame frame) {
+	double calculateCompetingTags (Frame frame) {
 		int answer = 0;
 		return answer;
 	}
