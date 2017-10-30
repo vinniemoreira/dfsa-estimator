@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="dfsa-simulator">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="dfsa-simulator.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/commons-cli-1.4.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir=".">
+                <exclude name="**/*.java"/>
+                <exclude name="src/"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <src path="."/>
+            <exclude name="src/"/>
+            <classpath refid="dfsa-simulator.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="Test 0">
+        <java classname="program.Main" failonerror="true" fork="yes">
+            <arg line="lower 1000 0 1000 10 64"/>
+            <classpath refid="dfsa-simulator.classpath"/>
+        </java>
+    </target>
+    <target name="Test 1">
+        <java classname="program.Main" failonerror="true" fork="yes">
+            <arg line="lower 500 0 1000 1000 64"/>
+            <classpath refid="dfsa-simulator.classpath"/>
+        </java>
+    </target>
+    <target name="Test 2">
+        <java classname="program.Main" failonerror="true" fork="yes">
+            <arg line="lower 1000 0 1000 2000 64"/>
+            <classpath refid="dfsa-simulator.classpath"/>
+        </java>
+    </target>
+    <target name="Test 3">
+        <java classname="program.Main" failonerror="true" fork="yes">
+            <arg line="lower 600 0 1000 2000 64"/>
+            <classpath refid="dfsa-simulator.classpath"/>
+        </java>
+    </target>
+</project>

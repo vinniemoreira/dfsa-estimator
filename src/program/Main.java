@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		double initTime = System.currentTimeMillis();
 		String estimationAlgorithm = args[0];
 		int initialTagsNumber = Integer.parseInt(args[1]);
 		int incrementTagRate = Integer.parseInt(args[2]);
@@ -18,12 +18,12 @@ public class Main {
 		
 		double totalSlotsAvg, totalEmptySlots, totalSuccessSlots, totalCollisionSlots;
 		totalSlotsAvg = totalEmptySlots = totalSuccessSlots = totalCollisionSlots = 0;
-		
+		Simulator currentSimulator;
 		for (int i = 0; i < iterationsNumber; i++) {
-			Simulator simulator = new Simulator (initialTagsNumber, incrementTagRate, maxTagsNumber,
+			currentSimulator = new Simulator (initialTagsNumber, incrementTagRate, maxTagsNumber,
 					iterationsNumber, initialFrameSize);
-			simulator.execute();
-			simulators.add(simulator);
+			currentSimulator.execute();
+			simulators.add(currentSimulator);
 			
 		}
 		
@@ -39,6 +39,12 @@ public class Main {
 		
 		System.out.println("total slots avg " + totalSlotsAvg + "\ncollision slots avg " + totalCollisionSlots + 
 		"\nempty slots avg " + totalEmptySlots);
+		
+		double endTime = System.currentTimeMillis();
+		
+		double totalTime = (endTime - initTime);
+		
+		System.out.println("\nexecution time " + totalTime);
 		
 		
 		
