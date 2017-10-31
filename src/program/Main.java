@@ -16,8 +16,8 @@ public class Main {
 		int initialFrameSize = Integer.parseInt(args[5]);
 		LinkedList<Simulator> simulators = new LinkedList();
 		
-		double totalSlotsAvg, totalEmptySlots, totalSuccessSlots, totalCollisionSlots;
-		totalSlotsAvg = totalEmptySlots = totalSuccessSlots = totalCollisionSlots = 0;
+		double totalSlotsAvg, totalEmptySlots, totalCollisionSlots;
+		totalSlotsAvg = totalEmptySlots = totalCollisionSlots = 0;
 		Simulator currentSimulator;
 		for (int i = 0; i < iterationsNumber; i++) {
 			currentSimulator = new Simulator (initialTagsNumber, incrementTagRate, maxTagsNumber,
