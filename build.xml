@@ -16,11 +16,13 @@
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
+                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir=".">
+                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
                 <exclude name="src/"/>
             </fileset>
@@ -42,40 +44,39 @@
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
     <target name="Test 0">
         <java classname="program.Main" failonerror="true" fork="yes">
-            <arg line="lower 1000 0 1000 10 64"/>
+            <arg line="lower 1000 0 1000 2 64"/>
             <classpath refid="dfsa-simulator.classpath"/>
         </java>
     </target>
     <target name="Test 1">
         <java classname="program.Main" failonerror="true" fork="yes">
-            <arg line="lower 500 0 1000 1000 64"/>
+            <arg line="lower 1000 0 0 2000 64"/>
             <classpath refid="dfsa-simulator.classpath"/>
         </java>
     </target>
     <target name="Test 2">
         <java classname="program.Main" failonerror="true" fork="yes">
-            <arg line="lower 1000 0 1000 2000 64"/>
+            <arg line="lower 500 0 0 2000 32"/>
+            <classpath refid="dfsa-simulator.classpath"/>
+        </java>
+    </target>
+    <target name="Test 4">
+        <java classname="program.Main" failonerror="true" fork="yes">
+            <arg line="lower 300 0 0 2000 32"/>
             <classpath refid="dfsa-simulator.classpath"/>
         </java>
     </target>
     <target name="Test 3">
         <java classname="program.Main" failonerror="true" fork="yes">
-            <arg line="lower 600 0 1000 2000 64"/>
+            <arg line="lower 500 0 0 2000 64"/>
+            <classpath refid="dfsa-simulator.classpath"/>
+        </java>
+    </target>
+    <target name="Test 5">
+        <java classname="program.Main" failonerror="true" fork="yes">
+            <arg line="eom 300 0 0 2000 64"/>
             <classpath refid="dfsa-simulator.classpath"/>
         </java>
     </target>

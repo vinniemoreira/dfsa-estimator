@@ -21,8 +21,8 @@ public class Frame {
 		this.competingTags = 0;
 	}
 	
-	void execute (int tagsNum) {
-		buildSlots(tagsNum);
+	void execute (int tagNumber) {
+		buildSlots(tagNumber);
 		
 		for (int x : slots) {
 			if (x==0)
@@ -34,9 +34,9 @@ public class Frame {
 		}
 	}
 	
-	void buildSlots (int tagsNum) {
-		for (int i = 0; i < tagsNum; i++) {
-			int slotToTransmit = new Random().nextInt((tagsNum));
+	void buildSlots (int tagNumber) {
+		for (int i = 0; i < tagNumber; i++) {
+			int slotToTransmit = new Random().nextInt(frameSize);
 			slots[slotToTransmit]++;
 		}
 	}

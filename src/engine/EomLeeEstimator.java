@@ -9,7 +9,7 @@ public class EomLeeEstimator extends Estimator {
 		
 		factorB = Double.POSITIVE_INFINITY;
 		factorY = 2;
-		threshold = 0.1;
+		threshold = 0.5;
 		frameSize = 0;
 		competingTags = 0;
 	}

@@ -7,7 +7,7 @@ public class LowBoundEstimator extends Estimator {
 	Frame calculateNextFrame (Frame frame) {
 		Frame nextFrame;
 		
-		int nextFrameSize = frame.collisionSlots * 2;
+		int nextFrameSize = frame.collisionSlots * 2;  
 		nextFrame = new Frame(nextFrameSize);
 		
 		System.out.println("Used lower method");

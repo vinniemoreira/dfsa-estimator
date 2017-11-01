@@ -57,16 +57,17 @@ public class Simulator {
 	
 	public void execute () {
 		Frame currentFrame = new Frame(initialFrameSize);
-		// Tag tag = new Tag ();
+		System.out.print("current backlog " + backlog);
 		 while (identifiedTagsNum < initialTagsNumber) {
 			currentFrame.execute(backlog);
+			
 			identifiedTagsNum += currentFrame.successfullSlots;	
-			currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
+			// currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
 			frames.add(currentFrame);
 			backlog = initialTagsNumber - identifiedTagsNum;
 			currentFrame = estimator.calculateNextFrame(currentFrame);
 		}
-		calculateUsedSlots();
+		calculateUsedSlots(); 
 		
 		
 	}
