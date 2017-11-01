@@ -7,15 +7,15 @@ public class LowBoundEstimator extends Estimator {
 	Frame calculateNextFrame (Frame frame) {
 		Frame nextFrame;
 		
-		double nextFrameSize = frame.collisionSlots * 2;
+		int nextFrameSize = frame.collisionSlots * 2;
 		nextFrame = new Frame(nextFrameSize);
 		
-		
+		System.out.println("Used lower method");
 		return nextFrame;
 	}
 	
-	double calculateCompetingTags (Frame frame) {
-		double computingTags = Math.ceil(frame.successfullSlots + (2 * frame.collisionSlots));
-		return computingTags;
+	int calculateCompetingTags (Frame frame) {
+		int competingTags = frame.successfullSlots + (2 * frame.collisionSlots);
+		return competingTags;
 	}
 }

@@ -2,7 +2,7 @@ package engine;
 
 public class EomLeeEstimator extends Estimator {
 
-	double factorB, factorY, threshold;
+	double factorB, factorY, threshold, frameSize, competingTags;
 	
 	public EomLeeEstimator() {
 		// TODO Auto-generated constructor stub
@@ -10,31 +10,38 @@ public class EomLeeEstimator extends Estimator {
 		factorB = Double.POSITIVE_INFINITY;
 		factorY = 2;
 		threshold = 0.1;
+		frameSize = 0;
+		competingTags = 0;
 	}
 	
 	@Override
 	Frame calculateNextFrame(Frame frame) {
 		// TODO Auto-generated method stub
-		double n = 0;
-		double prevFactorY = 0;
-		while ((factorY - prevFactorY) > threshold) {
-			prevFactor
-			factorB = (frame.frameSize)/((prevFactorY*frame.collisionSlots)+frame.successfullSlots);
-			factorY = 
+		Frame newFrame;
+		double currentY = 0;
+		double prevY = factorY;
+		double currentB = factorB;
+		while ((currentY - prevY) > threshold) {
+			currentB = (frame.frameSize)/((prevY*frame.collisionSlots)+frame.successfullSlots);
+			
+			currentY = (1 - Math.pow(Math.E, -(1/currentB))/(currentB * (1 - (1+1/currentB) * Math.pow(Math.E, 1/currentB))));
 		}
 		
+		factorY = currentY;
+		factorB = currentB;
+		double frameSize = currentY * frame.collisionSlots;
 		
-		
-		
-		Frame answer = new Frame(n); 
-		return answer;
+		this.frameSize = frameSize;
+		newFrame = new Frame((int) frameSize);
+		System.out.println("Used eom lee method");
+		return newFrame;
 	}
 	
-	double calculateCompetingTags (Frame frame) {
+	int calculateCompetingTags (Frame frame) {
+		int answer = 0;
 		
+		answer = (int) Math.ceil(this.frameSize/factorB);
 		
-		
-		double answer = 0;
 		return answer;
 	}
 

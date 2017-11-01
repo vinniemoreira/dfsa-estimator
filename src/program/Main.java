@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		double initTime = System.currentTimeMillis();
-		String estimationAlgorithm = args[0];
+		String algorithmName = args[0];
 		int initialTagsNumber = Integer.parseInt(args[1]);
 		int incrementTagRate = Integer.parseInt(args[2]);
 		int maxTagsNumber = Integer.parseInt(args[3]); 
@@ -20,8 +20,9 @@ public class Main {
 		totalSlotsAvg = totalEmptySlots = totalCollisionSlots = 0;
 		Simulator currentSimulator;
 		for (int i = 0; i < iterationsNumber; i++) {
-			currentSimulator = new Simulator (initialTagsNumber, incrementTagRate, maxTagsNumber,
+			currentSimulator = new Simulator (algorithmName, initialTagsNumber, incrementTagRate, maxTagsNumber,
 					iterationsNumber, initialFrameSize);
+			System.out.println(currentSimulator.algorithmName);
 			currentSimulator.execute();
 			simulators.add(currentSimulator);
 			

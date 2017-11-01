@@ -3,8 +3,8 @@ package engine;
 import java.util.*;
 
 public class Simulator {
-	
-	Estimator estimator;
+	public String algorithmName;
+	public Estimator estimator;
 	LinkedList<Frame> frames;
 	// LinkedList<Tag> identifiedTags;
 	
@@ -19,7 +19,7 @@ public class Simulator {
 	public int successSlots, collisionSlots, emptySlots;
 	public double totalSlots;
 	
-	public Simulator () {
+	/*public Simulator () {
 		this.estimator = new LowBoundEstimator();
 		this.frames = new LinkedList();
 		this.initialTagsNumber = 100;
@@ -29,13 +29,19 @@ public class Simulator {
 		this.initialFrameSize = 64;
 		this.identifiedTagsNum = 0;
 		this.backlog = initialTagsNumber;
-	}
+	}*/
 	
-	public Simulator(int initialTagsNumber, int incrementTagRate, int maxTagsNumber,
+	public Simulator(String algorithmName, int initialTagsNumber, int incrementTagRate, int maxTagsNumber,
 			int iterationsNumber, int initialFrameSize) {
-		this.estimator = new LowBoundEstimator();
+		// this.estimator = new LowBoundEstimator();
+		this.algorithmName = algorithmName;
 		frames = new LinkedList();
 		// identifiedTags = new LinkedList();
+		
+		if (algorithmName.equals("eom"))
+			this.estimator = new EomLeeEstimator();
+		else if (algorithmName.equals("lower"));
+			this.estimator  = new LowBoundEstimator();
 		
 		this.initialTagsNumber = initialTagsNumber;
 		this.incrementTagRate = incrementTagRate;
