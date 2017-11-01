@@ -12,30 +12,32 @@ public class EomLeeEstimator extends Estimator {
 		threshold = 0.1;
 	}
 	
-	@Override
 	Frame calculateNextFrame(Frame frame) {
-		// TODO Auto-generated method stub
-		double n = 0;
-		double prevFactorY = 0;
-		while ((factorY - prevFactorY) > threshold) {
-			prevFactor
-			factorB = (frame.frameSize)/((prevFactorY*frame.collisionSlots)+frame.successfullSlots);
-			factorY = 
-		}
+		Frame nextFrame;
+		calculateFactors(frame);
 		
 		
+		double competingTags, nextFrameSize;
+		nextFrameSize = factorY * frame.collisionSlots;
+		competingTags = nextFrameSize/factorB;
 		
-		
-		Frame answer = new Frame(n); 
-		return answer;
+		nextFrame = new Frame (nextFrameSize, competingTags);
+		return nextFrame;
 	}
 	
-	double calculateCompetingTags (Frame frame) {
+	void calculateFactors (Frame frame) {
+		double currentB = 0;
+		double prevB = factorB;
+		double currentY = 0;
+		double prevY = factorY;
+		while ((currentY - prevY) > threshold){
+			currentB = (frame.frameSize)/((prevY*frame.collisionSlots)+frame.successfullSlots);
+			currentY = (1 - Math.pow(Math.E, -(1/currentB))/(currentB * (1 - (1+1/currentB) * Math.pow(Math.E, -(1/currentB)))));
+			prevB = currentB;
+			prevY = currentY;
+		}
 		
-		
-		
-		double answer = 0;
-		return answer;
+		factorB = currentB;
+		factorY = currentY;
 	}
-
 }

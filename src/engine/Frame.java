@@ -12,7 +12,7 @@ public class Frame {
 	
 	
 	
-	public Frame(double frameSize) {
+	public Frame(double frameSize, double competingTags) {
 		this.frameSize = frameSize;
 		this.slots = new int [(int)Math.ceil(frameSize)]; 
 		this.successfullSlots = 0;
@@ -21,7 +21,7 @@ public class Frame {
 		this.competingTags = 0;
 	}
 	
-	void execute (int tagsNum) {
+	void execute (double tagsNum) {
 		buildSlots(tagsNum);
 		
 		for (int x : slots) {
@@ -34,7 +34,7 @@ public class Frame {
 		}
 	}
 	
-	void buildSlots (int tagsNum) {
+	void buildSlots (double tagsNum) {
 		for (int i = 0; i < tagsNum; i++) {
 			int slotToTransmit = new Random().nextInt((int)Math.ceil(frameSize));
 			slots[slotToTransmit]++;

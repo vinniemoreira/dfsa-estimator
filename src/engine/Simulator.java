@@ -6,17 +6,18 @@ public class Simulator {
 	
 	Estimator estimator;
 	LinkedList<Frame> frames;
+	
 	// LinkedList<Tag> identifiedTags;
 	
-	int initialTagsNumber;
-	int incrementTagRate;
-	int maxTagsNumber;
-	int iterationsNumber;
-	int initialFrameSize;
-	int identifiedTagsNum;
-	int backlog;
+	double initialTagsNumber;
+	double incrementTagRate;
+	double maxTagsNumber;
+	double iterationsNumber;
+	double initialFrameSize;
+	double identifiedTagsNum;
+	double backlog;
 	
-	public int successSlots, collisionSlots, emptySlots;
+	public double successSlots, collisionSlots, emptySlots;
 	public double totalSlots;
 	
 	public Simulator () {
@@ -31,9 +32,16 @@ public class Simulator {
 		this.backlog = initialTagsNumber;
 	}
 	
-	public Simulator(int initialTagsNumber, int incrementTagRate, int maxTagsNumber,
-			int iterationsNumber, int initialFrameSize) {
-		this.estimator = new LowBoundEstimator();
+	public Simulator(String algorithmName, double initialTagsNumber, double incrementTagRate, double maxTagsNumber,
+			double iterationsNumber, double initialFrameSize) {
+		// this.estimator = new LowBoundEstimator();
+		
+		if (algorithmName.equals("lower"))
+			this.estimator = new LowBoundEstimator();
+		else
+			this.estimator = new EomLeeEstimator();
+			
+		
 		frames = new LinkedList();
 		// identifiedTags = new LinkedList();
 		
@@ -50,15 +58,16 @@ public class Simulator {
 	}
 	
 	public void execute () {
-		Frame currentFrame = new Frame(initialFrameSize);
+		Frame frame = new Frame(initialFrameSize, initialTagsNumber);
+		Frame nextFrame;
 		// Tag tag = new Tag ();
 		 while (identifiedTagsNum < initialTagsNumber) {
-			currentFrame.execute(backlog);
-			identifiedTagsNum += currentFrame.successfullSlots;	
-			currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
-			frames.add(currentFrame);
+			frame.execute(initialTagsNumber);
+			identifiedTagsNum += frame.successfullSlots;	
+			frames.add(frame);
 			backlog = initialTagsNumber - identifiedTagsNum;
-			currentFrame = estimator.calculateNextFrame(currentFrame);
+			nextFrame = estimator.calculateNextFrame(frame);
+			frame = nextFrame;
 		}
 		calculateUsedSlots();
 		
@@ -82,43 +91,43 @@ public class Simulator {
 		return frames;
 	}
 
-	public int getInitialTagsNumber() {
+	public double getInitialTagsNumber() {
 		return initialTagsNumber;
 	}
 
-	public int getIncrementTagRate() {
+	public double getIncrementTagRate() {
 		return incrementTagRate;
 	}
 
-	public int getMaxTagsNumber() {
+	public double getMaxTagsNumber() {
 		return maxTagsNumber;
 	}
 
-	public int getIterationsNumber() {
+	public double getIterationsNumber() {
 		return iterationsNumber;
 	}
 
-	public int getInitialFrameSize() {
+	public double getInitialFrameSize() {
 		return initialFrameSize;
 	}
 
-	public int getIdentifiedTagsNum() {
+	public double getIdentifiedTagsNum() {
 		return identifiedTagsNum;
 	}
 
-	public int getBacklog() {
+	public double getBacklog() {
 		return backlog;
 	}
 
-	public int getSuccessSlots() {
+	public double getSuccessSlots() {
 		return successSlots;
 	}
 
-	public int getCollisionSlots() {
+	public double getCollisionSlots() {
 		return collisionSlots;
 	}
 
-	public int getEmptySlots() {
+	public double getEmptySlots() {
 		return emptySlots;
 	}
 

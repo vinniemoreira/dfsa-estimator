@@ -20,7 +20,7 @@ public class Main {
 		totalSlotsAvg = totalEmptySlots = totalCollisionSlots = 0;
 		Simulator currentSimulator;
 		for (int i = 0; i < iterationsNumber; i++) {
-			currentSimulator = new Simulator (initialTagsNumber, incrementTagRate, maxTagsNumber,
+			currentSimulator = new Simulator (estimationAlgorithm, initialTagsNumber, incrementTagRate, maxTagsNumber,
 					iterationsNumber, initialFrameSize);
 			currentSimulator.execute();
 			simulators.add(currentSimulator);
