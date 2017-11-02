@@ -2,6 +2,6 @@ package engine;
 
 public abstract class Estimator { 
 	
-	abstract Frame calculateNextFrame (Frame frame);
-	abstract int calculateCompetingTags (Frame frame);
+	public abstract int calculateNextFrame (Frame frame);
+	public abstract int calculateCompetingTags (Frame frame);
 }

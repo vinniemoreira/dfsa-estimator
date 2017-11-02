@@ -4,44 +4,30 @@ import java.util.*;
 
 public class Simulator {
 	public String algorithmName;
-	public Estimator estimator;
+	public EomLeeEstimator estimator;
 	LinkedList<Frame> frames;
-	// LinkedList<Tag> identifiedTags;
 	
-	int initialTagsNumber;
-	int incrementTagRate;
-	int maxTagsNumber;
-	int iterationsNumber;
-	int initialFrameSize;
-	int identifiedTagsNum;
-	int backlog;
+	public int initialTagsNumber;
+	public int incrementTagRate;
+	public int maxTagsNumber;
+	public int iterationsNumber;
+	public int initialFrameSize;
+	public int identifiedTagsNum;
+	public int backlog;
 	
 	public int successSlots, collisionSlots, emptySlots;
 	public double totalSlots;
-	
-	/*public Simulator () {
-		this.estimator = new LowBoundEstimator();
-		this.frames = new LinkedList();
-		this.initialTagsNumber = 100;
-		this.incrementTagRate = 100;
-		this.maxTagsNumber = 1000;
-		this.iterationsNumber = 1000;
-		this.initialFrameSize = 64;
-		this.identifiedTagsNum = 0;
-		this.backlog = initialTagsNumber;
-	}*/
 	
 	public Simulator(String algorithmName, int initialTagsNumber, int incrementTagRate, int maxTagsNumber,
 			int iterationsNumber, int initialFrameSize) {
 		// this.estimator = new LowBoundEstimator();
 		this.algorithmName = algorithmName;
 		frames = new LinkedList();
-		// identifiedTags = new LinkedList();
 		
-		if (algorithmName.equals("eom"))
+		if (algorithmName.equalsIgnoreCase("eom"))
 			this.estimator = new EomLeeEstimator();
-		else if (algorithmName.equals("lower"));
-			this.estimator  = new LowBoundEstimator();
+		else if (algorithmName.equalsIgnoreCase("lower"));
+			this.estimator  = new EomLeeEstimator();
 		
 		this.initialTagsNumber = initialTagsNumber;
 		this.incrementTagRate = incrementTagRate;
@@ -57,15 +43,16 @@ public class Simulator {
 	
 	public void execute () {
 		Frame currentFrame = new Frame(initialFrameSize);
-		System.out.print("current backlog " + backlog);
+		int nextFrameSize;
 		 while (identifiedTagsNum < initialTagsNumber) {
+			System.out.println("current backlog " + backlog);
 			currentFrame.execute(backlog);
-			
 			identifiedTagsNum += currentFrame.successfullSlots;	
+			nextFrameSize = estimator.calculateNextFrame(currentFrame);
 			// currentFrame.competingTags = estimator.calculateCompetingTags(currentFrame);
 			frames.add(currentFrame);
 			backlog = initialTagsNumber - identifiedTagsNum;
-			currentFrame = estimator.calculateNextFrame(currentFrame);
+			currentFrame = new Frame(nextFrameSize);
 		}
 		calculateUsedSlots(); 
 		

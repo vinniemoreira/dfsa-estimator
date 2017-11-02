@@ -16,13 +16,12 @@ public class Main {
 		int initialFrameSize = Integer.parseInt(args[5]);
 		LinkedList<Simulator> simulators = new LinkedList();
 		
-		double totalSlots, totalEmptySlots, totalCollisionSlots;
+		int totalSlots, totalEmptySlots, totalCollisionSlots;
 		totalSlots = totalEmptySlots = totalCollisionSlots = 0;
 		Simulator currentSimulator;
 		for (int i = 0; i < iterationsNumber; i++) {
 			currentSimulator = new Simulator (algorithmName, initialTagsNumber, incrementTagRate, maxTagsNumber,
 					iterationsNumber, initialFrameSize);
-			System.out.println(currentSimulator.algorithmName);
 			currentSimulator.execute();
 			simulators.add(currentSimulator);
 			
@@ -34,12 +33,12 @@ public class Main {
 			totalEmptySlots += x.emptySlots;
 		}
 		
-		totalSlots = Math.ceil(totalSlots/simulators.size());
-		totalCollisionSlots = Math.ceil(totalCollisionSlots/simulators.size());
-		totalEmptySlots = Math.ceil(totalEmptySlots/simulators.size());
+		totalSlots = totalSlots/simulators.size();
+		totalCollisionSlots = totalCollisionSlots/simulators.size();
+		totalEmptySlots = totalEmptySlots/simulators.size();
 		
-		System.out.println("total slots " + totalSlots + "\ncollision slots avg " + totalCollisionSlots + 
-		"\nempty slots avg " + totalEmptySlots);
+		System.out.println("identified tags " + initialTagsNumber + "\ntotal slots " + totalSlots + "\ncollision slots " + totalCollisionSlots + 
+		"\nempty slots " + totalEmptySlots);
 		
 		double endTime = System.currentTimeMillis();
 		

@@ -3,12 +3,12 @@ package engine;
 import java.util.*;
 
 public class Frame {
-	int frameSize;
-	int [] slots;
-	int successfullSlots;
-	int collisionSlots;
-	int emptySlots;
-	int competingTags;	//estimative
+	public int frameSize;
+	public int [] slots;
+	public int successfullSlots;
+	public int collisionSlots;
+	public int emptySlots;
+	public int competingTags;	//estimative
 	
 	
 	
@@ -21,7 +21,7 @@ public class Frame {
 		this.competingTags = 0;
 	}
 	
-	void execute (int tagNumber) {
+	public void execute (int tagNumber) {
 		buildSlots(tagNumber);
 		
 		for (int x : slots) {
@@ -34,7 +34,7 @@ public class Frame {
 		}
 	}
 	
-	void buildSlots (int tagNumber) {
+	public void buildSlots (int tagNumber) {
 		for (int i = 0; i < tagNumber; i++) {
 			int slotToTransmit = new Random().nextInt(frameSize);
 			slots[slotToTransmit]++;
